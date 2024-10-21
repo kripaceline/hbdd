@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday!</title>
+    <style>
+        body {
+            background-image: url('https://i.pinimg.com/736x/a5/a4/10/a5a410f601fae1459b453131f8d61e39.jpg');
+            background-size: cover;
+            background-position: center;
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .box {
+            margin: 200px auto; /* Centered box */
+            padding: 20px;
+            border-radius: 10px;
+            background-color: white;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            display: inline-block;
+            position: relative; /* Position relative to stack hearts behind it */
+            z-index: 1; /* Ensure box is above hearts */
+        }
+        h1 {
+            font-family: 'Courier', cursive, Courier;
+            font-size: 3em;
+            color: #575799;
+        }
+        button {
+            padding: 12px 24px; /* Increased padding for a cuter look */
+            border: none;
+            border-radius: 30px; /* More rounded corners */
+            background-color: #090933;
+            color: white;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s; /* Added transform transition */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Added shadow */
+            margin: 10px; /* Added margin between buttons */
+        }
+        button:hover {
+            background-color: #9d9dcc;
+            transform: scale(1.05); /* Slightly enlarge on hover */
+        }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <h1>Happy Birthday Babyyyy!</h1>
+        <button onclick="location.href='letter.html'">Read Letter</button>
+        <button onclick="location.href='party.html'">Party Time!</button> <!-- New page button -->
+    </div>
+</body>
+</html>
+
