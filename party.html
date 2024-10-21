@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Party Time!</title>
+    <style>
+        body {
+            background-color: #d3d3ff;
+            font-family: 'Arial', sans-serif;
+            overflow: hidden; /* Prevent scrolling */
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            position: relative;
+        }
+        .balloon {
+            position: absolute;
+            font-size: 4em; /* Increased size */
+            cursor: pointer;
+            user-select: none;
+            animation: floatUp 10s infinite ease-in-out;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(100vh); }
+            100% { transform: translateY(-150vh); }
+        }
+
+        .confetti {
+            position: absolute;
+            opacity: 1;
+            transition: transform 5s ease, opacity 5s ease; /* Set transition duration to 5 seconds */
+            font-size: 1em; /* Set a base font size for the stars */
+        }
+
+        button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            padding: 10px 20px;
+            font-size: 1.2em;
+            background-color: #090933;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            z-index: 100;
+        }
+
+        .instruction {
+            position: absolute;
+            top: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 1.5em;
+            color: #333;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="instruction">Click on the hearts for a surprise!</div>
+    <button onclick="location.href='hbd.html'">Back to Home</button>
+
+    <script>
+        const balloonColors = ['💜']; // Only purple hearts as balloons
+
+        function createBalloon() {
+            const balloon = document.createElement('div');
+            balloon.classList.add('balloon');
+            balloon.textContent = balloonColors[Math.floor(Math.random() * balloonColors.length)];
+            balloon.style.left = Math.random() * 100 + 'vw'; // Random horizontal position
+
+            balloon.addEventListener('click', () => {
+                explodeBalloon(balloon);
+            });
+
+            document.body.appendChild(balloon);
+
+            setTimeout(() => { balloon.remove(); }, 12000); // Remove balloon after its animation completes
+        }
+
+        function explodeBalloon(balloon) {
+            const rect = balloon.getBoundingClientRect();
+
+            // Generate a random number of confetti between 100 and 200
+            const confettiCount = Math.floor(Math.random() * 101) + 100; // Random number between 100 and 200
+
+            // Create confetti at balloon location
+            for (let i = 0; i < confettiCount; i++) {
+                createConfetti(rect.left + rect.width / 2, rect.top + rect.height / 2);
+            }
+
+            balloon.remove(); // Remove the balloon after click
+        }
+
+        function createConfetti(x, y) {
+            const confetti = document.createElement('div');
+            confetti.classList.add('confetti');
+            confetti.textContent = '★'; // Set confetti character to star
+            confetti.style.color = getRandomPurpleShade(); // Set color for confetti
+            confetti.style.position = 'absolute';
+            confetti.style.left = `${x}px`;
+            confetti.style.top = `${y}px`;
+
+            // Randomize direction for confetti scatter
+            const angle = Math.random() * 2 * Math.PI; // Random angle in radians
+            const distance = Math.random() * 100 + 50; // Random distance (min 50)
+            const confettiX = Math.cos(angle) * distance; // X direction
+            const confettiY = Math.sin(angle) * distance; // Y direction
+
+            // Animate confetti to scatter in random direction
+            confetti.style.transform = `translate(${confettiX}px, ${confettiY}px)`;
+            document.body.appendChild(confetti);
+
+            // Set timeout to allow transition to take effect before starting to fall and fade
+            setTimeout(() => {
+                confetti.style.transform += ' translateY(100vh)'; // Fall down
+                confetti.style.opacity = 0; // Fade out
+            }, 10); // Small timeout to allow transition to take effect
+
+            // Remove confetti after 5 seconds
+            setTimeout(() => { confetti.remove(); }, 5000); // Remove confetti after 5 seconds
+        }
+
+        function getRandomPurpleShade() {
+            const purpleShades = ['#6a0dad', '#8a2be2', '#9370db', '#dda0dd', '#e6e6fa', '#d8bfd8', '#b19cd9'];
+            return purpleShades[Math.floor(Math.random() * purpleShades.length)];
+        }
+
+        // Create a balloon every 1 second (faster appearance)
+        setInterval(createBalloon, 1000);
+        createBalloon(); // Immediately create the first balloon
+    </script>
+
+</body>
+</html>
